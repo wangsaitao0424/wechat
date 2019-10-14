@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//粉丝列表
+//粉丝列表  经过标签页进
 Route::get('wecaht/access','WechatController@index');
 //登录 微信授权
 Route::get('wecaht/login','WechatController@login');

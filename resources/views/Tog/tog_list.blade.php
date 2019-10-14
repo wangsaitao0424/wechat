@@ -10,7 +10,7 @@
 <body>
     <center>
         <button class="do">添加标签</button>
-        <button class="list">粉丝列表</button>
+        {{--<button class="list">粉丝列表</button>--}}
         <table border="66">
             <tr>
                 <td>标签ID</td>
@@ -37,8 +37,8 @@
     $('.do').click(function () {
         location.href="{{env('APP_URL').'/wechat/add_tog'}}";
     })
-    $('.list').click(function () {
-        location.href="{{env('APP_URL').'/wecaht/access'}}";
-    })
+    {{--$('.list').click(function () {--}}
+        {{--location.href="{{env('APP_URL').'/wecaht/access'}}";--}}
+    {{--})--}}
 </script>
 </html>

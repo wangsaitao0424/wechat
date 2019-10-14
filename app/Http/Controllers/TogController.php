@@ -159,6 +159,11 @@ class TogController extends Controller
 //        dd($result['data']['openid']);
         return view('Tog.tag_user',['list'=>$result['data']['openid'],'tag_id'=>$req]);
     }
+
+    /**
+     * 批量取消用户标签
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function on_user_tag()
     {
         $req=$this->request->all();
