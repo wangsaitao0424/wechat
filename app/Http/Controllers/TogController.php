@@ -21,7 +21,8 @@ class TogController extends Controller
     public function tog_list()
     {
        $result=$this->tools->tag_list();
-        return view('Tog.tog_list',['data'=>$result['tags']]);
+//       dd($result);
+        return view('Tog.tog_list',['data'=>$result]);
     }
 
     /**

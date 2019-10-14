@@ -14,6 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//接受用户微信发到的信息
+Route::any('wechat/event','EventController@event');
 //粉丝列表  经过标签页进
 Route::get('wecaht/access','WechatController@index');
 //登录 微信授权

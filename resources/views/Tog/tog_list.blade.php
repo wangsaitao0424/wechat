@@ -17,7 +17,7 @@
                 <td>标签名称</td>
                 <td>操作</td>
             </tr>
-            @foreach($data as $v)
+            @foreach($data['tags'] as $v)
             <tr>
                 <td>{{$v['id']}}</td>
                 <td>{{$v['name']}}</td>
