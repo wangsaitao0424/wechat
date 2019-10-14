@@ -145,6 +145,11 @@ class TogController extends Controller
             }
         }
     }
+
+    /**
+     * 查看标签下粉丝
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function tag_user()
     {
         $req=$this->request->all();
@@ -156,8 +161,9 @@ class TogController extends Controller
         ];
         $re=$this->tools->curl_post($url,json_encode($data));
         $result=json_decode($re,1);
+//        dd($result);
 //        dd($result['data']['openid']);
-        return view('Tog.tag_user',['list'=>$result['data']['openid'],'tag_id'=>$req]);
+        return view('Tog.tag_user',['list'=>$result,'tag_id'=>$req]);
     }
 
     /**

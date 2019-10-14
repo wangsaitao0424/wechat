@@ -18,14 +18,21 @@
                 <td>openid</td>
                 {{--<td>操作</td>--}}
             </tr>
-            @foreach($list as $v)
+            @if($list['count']==0)
                 <tr>
-                    <td><input type="checkbox" name="openid_list[]" value="{{$v}}"></td>
-
-                    <td>{{$v}}</td>
-                    {{--<td><a href="{{url('wechat/user_tag')}}?openid={{$v}}"></a></td>--}}
+                    <td></td>
+                    <td></td>
                 </tr>
-            @endforeach
+            @else
+                @foreach($list['data']['openid'] as $v)
+                    <tr>
+                        <td><input type="checkbox" name="openid_list[]" value="{{$v}}"></td>
+
+                        <td>{{$v}}</td>
+                        {{--<td><a href="{{url('wechat/user_tag')}}?openid={{$v}}"></a></td>--}}
+                    </tr>
+                @endforeach
+            @endif
         </table>
         <input type="submit" value="批量为用户取消标签">
     </form>
