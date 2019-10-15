@@ -19,7 +19,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'wechat/event'
+        'wechat/event',
+        'http://47.93.253.39/wechat/event'
 
     ];
 }
