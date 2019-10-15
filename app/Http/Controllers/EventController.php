@@ -23,5 +23,6 @@ class EventController extends Controller
         $xml_obj=simplexml_load_string($info,'SimpleXMLElement',LIBXML_NOCDATA);//解析xml 后面的两个参数是死的
         $xml_arr=(array)$xml_obj;//强行转化成数组
 //        dd($xml_arr);
+        var_dump($xml_arr);
     }
 }
