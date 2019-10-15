@@ -25,7 +25,7 @@ class EventController extends Controller
 //        dd($xml_arr);
 //        var_dump($xml_arr);
 //        普通消息
-        if($xml_arr['MsgType']=='text' && $xml_arr['Content']=='你好'){
+        if($xml_arr['MsgType']=='text' && $xml_arr['Content']=='111'){
             $msg="你好！";
             echo '<xml><ToUserName><![CDATA['.$xml_arr['ToUserName'].']]></ToUserName><FromUserName><![CDATA['.$xml_arr['FromUserName'].']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg.']]></Content></xml>';
         }
