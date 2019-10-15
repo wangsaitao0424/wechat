@@ -4,6 +4,10 @@ namespace APP\Tools;
 use Illuminate\Support\Facades\Cache;
 
 Class Tools{
+    /**
+     * 获取access_token
+     * @return mixed
+     */
     public function access_token()
     {
         $key='wechat_access_token';
@@ -21,6 +25,19 @@ Class Tools{
             $wechat_assess_token=$re['access_token'];
         }
         return $wechat_assess_token;
+    }
+
+    /**
+     * 根据openid获取用户的基本新
+     * @param $openid
+     * @return mixed
+     */
+    public function get_wechat_user($openid)
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token().'&openid='.$openid.'&lang=zh_CN';
+        $re = file_get_contents($url);
+        $result = json_decode($re,1);
+        return $result;
     }
 
     /**
