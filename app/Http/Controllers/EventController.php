@@ -39,7 +39,9 @@ class EventController extends Controller
         //被动回复发送图片
         if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="图片"){
             $msg="u1d_3ecTK6ivZFZghEqyC8ygkKNV8-rQJPJpWOHomPGenhqHpXLq5iqoWLpp-eNm";
+            $voice="P0GUq5oCCz8FxgS_KwsylzDh6CmNIrdByocXziA6XEoPEDuZCgvDnCWYw53yfEyh";
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[".$msg."]]></MediaId></Image></xml>";
+            echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[image]]></MsgType><Voice><MediaId><![CDATA[".$voice."]]></MediaId></Voice></xml>";
         }
     }
 }
