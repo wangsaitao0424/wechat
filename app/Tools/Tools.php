@@ -87,4 +87,28 @@ Class Tools{
         $result=json_decode($re,1);
         return $result;
     }
+
+    /**
+     * 微信素材专用 post
+     * @param $url
+     * @param $path
+     * @return mixed
+     */
+    public function wechat_curl_file($url,$path)
+    {
+        $curl=curl_init($url);
+        curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
+
+        curl_setopt($curl,CURLOPT_POST,true);
+        $data=[
+            'media'=>new \CURLFile(realpath($path)),
+        ];
+        curl_setopt($curl,CURLOPT_POSTFIELDS,$data);
+
+        $result=curl_exec($curl);
+        curl_close($curl);
+        return $result;
+    }
 }

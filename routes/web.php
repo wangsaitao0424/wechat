@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//上传微信素材
+Route::get('wechat/resources_add','ResourcesController@resources_add');
+Route::post('wechat/resources_do','ResourcesController@resources_do');
 //接受用户微信发到的信息
 Route::any('wechat/event','EventController@event');
 //粉丝列表  经过标签页进
