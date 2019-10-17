@@ -47,4 +47,4 @@ Route::get('wechat/resources_list','ResourcesController@resources_list');
 //素材下载
 Route::get('wechat/resources_download','ResourcesController@resources_download');
 //
-Rotue::get('wechat/wechat_carte','WechatController@wechat_carte');
+Route::get('wechat/wechat_carte','WechatController@wechat_carte');
