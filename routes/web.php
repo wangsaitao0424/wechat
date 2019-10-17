@@ -40,3 +40,11 @@ Route::get('wechat/user_tag','TogController@user_tag');
 Route::post('wechat/on_user_tag','TogController@on_user_tag');
 //标签下的粉丝
 Route::get('wechat/tag_user','TogController@tag_user');
+//公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零：
+Route::get('wechat/clear_api','WechatController@clear_api');
+//素材展示
+Route::get('wechat/resources_list','ResourcesController@resources_list');
+//素材下载
+Route::get('wechat/resources_download','ResourcesController@resources_download');
+//
+Rotue::get('wechat/wechat_carte','WechatController@wechat_carte');

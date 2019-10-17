@@ -100,4 +100,54 @@ class WechatController extends Controller
         return view('Wechat.user_list',['list'=>$openid_list,'tag_id'=>$request->all()]);
     }
 
+    /**
+     * 公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零：
+     */
+    public function clear_api()
+    {
+//        echo 11;die;
+        $url='https://api.weixin.qq.com/cgi-bin/clear_quota?access_token='.$this->tools->access_token();
+        $data=['appid'=>env('APPID')];
+        $re=$this->tools->curl_post($url,json_encode($data));
+        $result=json_decode($re,1);
+        dd($result);
+    }
+
+    /**
+     *
+     */
+    public function wechat_carte()
+    {
+        $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->tools->access_token();
+        $data=[
+            'button'=>[
+                'type'=>'click',
+                'name'=>'今日歌曲',
+                'key'=>'V1001_TODAY_MUSIC',
+            ],
+            [
+                'name'=>'菜单',
+                'sub_button'=>[
+                    'type'=>'view',
+                    'name'=>'搜索',
+                    'url'=>'http://www.soso.com/',
+                ],
+                [
+                    'type'=>'miniprogram',
+                    'name'=>'wxa',
+                    'url'=>'http://mp.weixin.qq.com',
+                    'appid'=>'wx286b93c14bbf93aa',
+                    'pagepath'=>'pages/lunar/index',
+                ],
+                [
+                    'type'=>'click',
+                    'name'=>'赞一下我们',
+                    'key'=>'V1001_GOOD'
+                ]
+            ]
+        ];
+        $re=$this->tools->curl_post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+        $result=json_decode($re,1);
+        dd($result);
+    }
 }
