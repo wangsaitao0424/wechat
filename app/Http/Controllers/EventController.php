@@ -28,6 +28,7 @@ class EventController extends Controller
 //        关注操作
         if($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe'){
             $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
+//            dd($nickname);
             $msg="你好".$nickname['nickname'].",欢迎来到！";
             $sign=Sign::where(['openid'=>$nickname['openid']])->first();
 //            dd($sign);
@@ -36,10 +37,18 @@ class EventController extends Controller
                     'openid'=>$nickname['openid'],
                     'nickname'=>$nickname['nickname'],
                     'sex'=>$nickname['sex'],
-                    'subscribe_time'=>$nickname['subscribe_time'],
+                    'subscribe_time'=>$nickname['subscribe_time']
                 ]);
             }
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
+        }
+        if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'CLICK'){
+            if($xml_arr['EventKey'] == 'V1002_SIGN_in'){
+                $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
+                if($integral_time['integral_time']){
+
+                }
+            }
 
         }
 //        普通消息

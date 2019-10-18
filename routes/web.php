@@ -46,5 +46,10 @@ Route::get('wechat/clear_api','WechatController@clear_api');
 Route::get('wechat/resources_list','ResourcesController@resources_list');
 //素材下载
 Route::get('wechat/resources_download','ResourcesController@resources_download');
-//
+//自定义菜单
 Route::get('wechat/wechat_carte','WechatController@wechat_carte');
+//添加自定义菜单
+Route::get('wechat/add_menu','MenuController@add_menu');
+Route::post('wechat/create_menu','MenuController@create_menu');
+//加载菜单
+Route::get('wecaht/wechat_menu','MenuController@wechat_menu');
