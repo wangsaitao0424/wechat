@@ -53,3 +53,7 @@ Route::get('wechat/add_menu','MenuController@add_menu');
 Route::post('wechat/create_menu','MenuController@create_menu');
 //加载菜单
 Route::get('wecaht/wechat_menu','MenuController@wechat_menu');
+//自定义菜单列表
+Route::get('wechat/menu_list','MenuController@menu_list');
+//删除数据库中的自定义菜单
+Route::get('wechat/menu_del','MenuController@menu_del');

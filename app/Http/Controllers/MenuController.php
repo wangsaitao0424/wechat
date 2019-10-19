@@ -70,6 +70,7 @@ class MenuController extends Controller
             ]);
         }
 //        dd("提交成功");
+        dd('请手动执行http://www.lening_wechat.com/wechat/wechat_menu');
         return redirect('wecaht/wechat_menu');
     }
 
@@ -134,4 +135,30 @@ class MenuController extends Controller
         $result=json_decode($re,1);
         dd($result);
     }
+
+    /**
+     * 自定义菜单列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function menu_list()
+    {
+        $data=Menu::get();
+//        dd($list);
+        $list=$this->tools->createTree($data,0);
+//        dd($list);
+        return view('Menu.menu_list',['list'=>$list]);
+    }
+    public function menu_del()
+    {
+        $id=$this->request->all();
+//        dd($id);
+        $count=Menu::where(['pid'=>$id])->count();
+//        dd($count);
+        if($count>=1){
+            dd('旗下有分支');
+        }
+        $re=Menu::where(['id'=>$id])->delete();
+        dd('请手动执行http://www.lening_wechat.com/wechat/wechat_menu');
+    }
+
 }

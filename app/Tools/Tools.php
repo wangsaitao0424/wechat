@@ -109,4 +109,26 @@ Class Tools{
         curl_close($curl);
         return $result;
     }
+    //无限极分类
+    function createTree($data,$parent_id=0,$level=1)
+    {
+        //1、定义一个容器  static 可以一直存在，不被循环掉
+        static $new_arr=[];
+        // dd($data);
+        //2、遍历数据一条一条的找
+        foreach ($data as $key => $value) {
+            // dd($value);
+            //3、先找parent_id=0
+            if($value['pid']==$parent_id){
+                //4、找到后放入容器中
+                $value['level']=$level;
+                $new_arr[]=$value;
+//                dd($value['id']);
+                //5、调用程序自身递归找子级parent_id=cat_id
+                $this->createTree($data,$value['id'],$level+1);
+                // $new_arr = array_merge(createTree($data,$value['cat_id'],$lev+1));
+            }
+        }
+        return $new_arr;
+    }
 }

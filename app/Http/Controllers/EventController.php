@@ -43,8 +43,9 @@ class EventController extends Controller
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
         }
         if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'CLICK'){
-            if($xml_arr['EventKey'] == 'V1002_SIGN_in'){
+            if($xml_arr['EventKey'] == 'aaaa'){
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
+                dd($integral_time);
                 if($integral_time['integral_time']){
 
                 }
