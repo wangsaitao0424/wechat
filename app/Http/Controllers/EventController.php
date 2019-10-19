@@ -45,7 +45,16 @@ class EventController extends Controller
         if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'CLICK'){
             if($xml_arr['EventKey'] == 'aaaa'){
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-                dd($integral_time);
+//                dd($integral_time);
+                if(empty($integral_time)){
+                    $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
+                    Sign::create([
+                        'openid'=>$nickname['openid'],
+                        'nickname'=>$nickname['nickname'],
+                        'sex'=>$nickname['sex'],
+                        'subscribe_time'=>$nickname['subscribe_time']
+                    ]);
+                }
                 if($integral_time['integral_time']){
 
                 }
