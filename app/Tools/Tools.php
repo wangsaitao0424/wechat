@@ -11,7 +11,8 @@ Class Tools{
     public function access_token()
     {
         $key='wechat_access_token';
-//    	dd($key);
+//       $cache = Cache::forget($key);
+//       dd($cache);
 //        判断是否为空
         if(Cache::has($key)){
 //    	    有，取出来

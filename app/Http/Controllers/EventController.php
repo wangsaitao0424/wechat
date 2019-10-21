@@ -43,10 +43,14 @@ class EventController extends Controller
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
         }
         if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'CLICK'){
+            //判断是否点的是签到
             if($xml_arr['EventKey'] == 'aaaa'){
+                //查库
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
 //                dd($integral_time);
+                //判断库中有没有该用户的信息
                 if(empty($integral_time)){
+                    //无 添加
                     $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                     Sign::create([
                         'openid'=>$nickname['openid'],
@@ -55,6 +59,9 @@ class EventController extends Controller
                         'subscribe_time'=>$nickname['subscribe_time']
                     ]);
                 }
+//                $today_time=
+                $integral_times=$integral_time['integral_time'];
+                dd($integral_times);
                 if($integral_time['integral_time']){
 
                 }

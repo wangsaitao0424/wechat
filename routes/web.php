@@ -57,3 +57,8 @@ Route::get('wecaht/wechat_menu','MenuController@wechat_menu');
 Route::get('wechat/menu_list','MenuController@menu_list');
 //删除数据库中的自定义菜单
 Route::get('wechat/menu_del','MenuController@menu_del');
+//周考
+Route::get('week_test/login','LoginController@index');
+Route::get('week_test/login_do','LoginController@login_do');
+Route::get('week_test/login_code','LoginController@login_code')->middleware('login');
+Route::get('week_test/login_news','LoginController@login_news');
