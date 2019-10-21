@@ -47,7 +47,7 @@ class EventController extends Controller
             if($xml_arr['EventKey'] == 'aaaa'){
                 //查库
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-//                dd($integral_time);
+                dd($integral_time['integral']);
                 //判断库中有没有该用户的信息
                 if(empty($integral_time)){
                     //无 添加
@@ -59,12 +59,26 @@ class EventController extends Controller
                         'subscribe_time'=>$nickname['subscribe_time']
                     ]);
                 }
-                $today_time=date('Y-m-d',strtotime('-1',time()));
-                dd($today_time);
-                $integral_times=$integral_time['integral_time'];
-                dd($integral_times);
-                if($integral_time['integral_time']){
-
+                //今天时间
+                $today_time=date('Y-m-d',time());
+                //昨天时间
+                $yesterday_time=date('Y-m-d',strtotime('-1',time()));
+                //签到的时间
+                $integral_times=date('Y-m-d',$integral_time['integral_time']);
+                //今日已签到
+                if($integral_times == $today_time){
+                    $msg='今日已签到 ';
+                    echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
+                }else{
+                    //今日未签到
+                    //连续签到
+                    if($yesterday_time == $integral_times){
+                        Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
+                           'integral'=>$nickname[''],
+                           'integral_time'=>time(),
+                            'count'=>1
+                        ]);
+                    }
                 }
             }
 
