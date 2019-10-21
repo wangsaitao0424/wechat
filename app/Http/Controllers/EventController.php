@@ -59,7 +59,8 @@ class EventController extends Controller
                         'subscribe_time'=>$nickname['subscribe_time']
                     ]);
                 }
-//                $today_time=
+                $today_time=data('Y-m-d',strtotime('-1',time()));
+                dd($today_time);
                 $integral_times=$integral_time['integral_time'];
                 dd($integral_times);
                 if($integral_time['integral_time']){
