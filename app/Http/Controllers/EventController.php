@@ -42,6 +42,7 @@ class EventController extends Controller
             }
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
         }
+        //签到
         if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'CLICK'){
             //判断是否点的是签到
             if($xml_arr['EventKey'] == 'aaaa'){
@@ -99,6 +100,11 @@ class EventController extends Controller
                     $msg='签到成功';
                     echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
                 }
+            }else{
+                //查询总积分
+                $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
+                $msg='你的总积分为：'.$integral_time['integral'];
+                echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
             }
 
         }
