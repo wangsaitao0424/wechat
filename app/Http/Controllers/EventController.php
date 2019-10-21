@@ -47,7 +47,7 @@ class EventController extends Controller
             if($xml_arr['EventKey'] == 'aaaa'){
                 //查库
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-                dd(empty($integral_time));
+//                dd(empty($integral_time));
                 //判断库中有没有该用户的信息
                 if(empty($integral_time)){
                     //无 添加
