@@ -51,6 +51,7 @@ class EventController extends Controller
                 //判断库中有没有该用户的信息
                 if(empty($integral_time)){
                     //无 添加
+                    dd(11);
                     $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                     Sign::create([
                         'openid'=>$nickname['openid'],
