@@ -51,7 +51,7 @@ class EventController extends Controller
                 //判断库中有没有该用户的信息
                 if(empty($integral_time)){
                     //无 添加
-                    dd(11);
+//                    dd(11);
                     $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                     Sign::create([
                         'openid'=>$nickname['openid'],
@@ -77,21 +77,21 @@ class EventController extends Controller
                         //超过5天按第一次计算
                         if($integral_times >= 5){
                             Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
-                                'integral'=>$nickname['integral']+5,
+                                'integral'=>$integral_time['integral']+5,
                                 'integral_time'=>time(),
                                 'count'=>1
                             ]);
                         }else{
                             Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
-                                'integral'=>$nickname['integral']+5,
+                                'integral'=>$integral_time['integral']+5,
                                 'integral_time'=>time(),
-                                'count'=>$nickname['count']+1
+                                'count'=>$integral_time['count']+1
                             ]);
                         }
                     }else{
                         //没连续签到
                         Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
-                            'integral'=>$nickname['integral']+5,
+                            'integral'=>$integral_time['integral']+5,
                             'integral_time'=>time(),
                             'count'=>1
                         ]);
