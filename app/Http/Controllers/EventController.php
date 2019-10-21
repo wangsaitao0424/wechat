@@ -47,7 +47,7 @@ class EventController extends Controller
             if($xml_arr['EventKey'] == 'aaaa'){
                 //查库
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-                dd($integral_time['integral']);
+//                dd($integral_time['integral']);
                 //判断库中有没有该用户的信息
                 if(empty($integral_time)){
                     //无 添加
@@ -73,12 +73,30 @@ class EventController extends Controller
                     //今日未签到
                     //连续签到
                     if($yesterday_time == $integral_times){
+                        //超过5天按第一次计算
+                        if($integral_times >= 5){
+                            Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
+                                'integral'=>$nickname['integral']+5,
+                                'integral_time'=>time(),
+                                'count'=>1
+                            ]);
+                        }else{
+                            Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
+                                'integral'=>$nickname['integral']+5,
+                                'integral_time'=>time(),
+                                'count'=>$nickname['count']+1
+                            ]);
+                        }
+                    }else{
+                        //没连续签到
                         Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
-                           'integral'=>$nickname[''],
-                           'integral_time'=>time(),
+                            'integral'=>$nickname['integral']+5,
+                            'integral_time'=>time(),
                             'count'=>1
                         ]);
                     }
+                    $msg='签到成功';
+                    echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
                 }
             }
 
