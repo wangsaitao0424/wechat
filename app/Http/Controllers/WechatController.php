@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use App\Tools\Tools;
 use DB;
 class WechatController extends Controller
@@ -13,7 +14,38 @@ class WechatController extends Controller
     {
         $this->tools = $tools;
     }
-
+    //生成带参数的二维码视图
+    public function qr_lists()
+    {
+        $list=DB::connection('mysql_wx')->table('user')->get();
+        return view('Qr.qrlist',['list'=>$list]);
+    }
+    public function add_qr(Request $request)
+    {
+        $uid=$request->all();
+//        dd($uid['id']);
+        $url='https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.$this->tools->access_token();
+        $data=[
+            'expire_seconds'=>604800,
+            'action_name'=>'QR_SCENE',
+            'action_info'=>[
+                'scene'=>[
+                    'scene_id'=>$uid['id']
+                ]
+            ]
+        ];
+        $re=$this->tools->curl_post($url,json_encode($data));
+        $result=json_decode($re,1);
+        $urls='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.urlencode($result['ticket']);
+        $rq=$this->tools->curl_get($urls);
+//        dd($rq);
+        $path=$uid['id'].rand(10000,99999).'.jpg';
+        Storage::put('wechat/qr/'.$path, $rq);
+        DB::connection('mysql_wx')->table('user')->update([
+            'qr_url'=>'/storage/wechat/qr/'.$path
+        ]);
+        return redirect('wechat/qrlist');
+    }
     /**
      * 微信授权视图
      */

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tools\Tools;
 use App\Model\Sign;
+use App\Model\Openid;
+use DB;
 class EventController extends Controller
 {
     public $tools;
@@ -27,6 +29,29 @@ class EventController extends Controller
 //        var_dump($xml_arr);
 //        关注操作
         if($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe'){
+            //判断openid表是否有当前openid
+            $openid=Openid::where(['openid'=>$xml_arr['FromUserName']])->first();
+            if(isset($openid)){
+                //首次关注
+                if(isset($xml_arr['Ticket'])){
+                    //带参数
+                    $share_code = explode('_',$xml_arr['EventKey'])[1];
+//                    dd($share_code);
+                    Openid::insert([
+                        'uid'=>$share_code,
+                        'openid'=>$xml_arr['FromUserName'],
+                        'subscribe'=>1
+                    ]);
+                    DB::connection('mysql_wx')->table('user')->where(['id'=>$share_code])->increment('share_num',1); //加业绩
+                }
+             }else{
+                //普通关注
+                Openid::insert([
+                    'uid'=>0,
+                    'openid'=>$xml_arr['FromUserName'],
+                    'subscribe'=>1
+                ]);
+            }
             $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
 //            dd($nickname);
             $msg="你好".$nickname['nickname'].",欢迎来到！";
@@ -61,10 +86,13 @@ class EventController extends Controller
                         'subscribe_time'=>$nickname['subscribe_time']
                     ]);
                 }
+//                $ti=date('Y-m-d',strtotime("-1 days"));
+//                dd($ti);
                 //今天时间
                 $today_time=date('Y-m-d',time());
                 //昨天时间
-                $yesterday_time=date('Y-m-d',strtotime('-1',time()));
+                $yesterday_time=date('Y-m-d',strtotime("-1 days"));
+//                dd($yesterday_time);
                 //签到的时间
                 $integral_times=date('Y-m-d',$integral_time['integral_time']);
                 //今日已签到
@@ -76,7 +104,7 @@ class EventController extends Controller
                     //连续签到
                     if($yesterday_time == $integral_times){
                         //超过5天按第一次计算
-                        if($integral_times >= 5){
+                        if($integral_time['count'] >= 5){
                             Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
                                 'integral'=>$integral_time['integral']+5,
                                 'integral_time'=>time(),

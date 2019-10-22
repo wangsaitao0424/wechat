@@ -62,3 +62,6 @@ Route::get('week_test/login','LoginController@index');
 Route::get('week_test/login_do','LoginController@login_do');
 Route::get('week_test/login_code','LoginController@login_code')->middleware('login');
 Route::get('week_test/login_news','LoginController@login_news');
+//二维码
+Route::get('wechat/qrlist','WechatController@qr_lists');
+Route::get('wechat/add_qr','WechatController@add_qr');
