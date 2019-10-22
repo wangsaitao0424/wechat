@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             \Log::Info(1111);
-        })->daily();
+        })->everyMinute();
     }
 
     /**
