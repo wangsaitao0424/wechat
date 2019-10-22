@@ -83,6 +83,7 @@ class EventController extends Controller
                                 'count'=>1
                             ]);
                         }else{
+                            //没超过5天
                             Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
                                 'integral'=>$integral_time['integral']+($integral_time['count']+1)*5,
                                 'integral_time'=>time(),
