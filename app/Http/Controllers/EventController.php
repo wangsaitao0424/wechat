@@ -84,7 +84,7 @@ class EventController extends Controller
                             ]);
                         }else{
                             Sign::where(['openid'=>$xml_arr['FromUserName']])->update([
-                                'integral'=>$integral_time['integral']+5,
+                                'integral'=>$integral_time['integral']+($integral_time['count']+1)*5,
                                 'integral_time'=>time(),
                                 'count'=>$integral_time['count']+1
                             ]);
@@ -103,7 +103,7 @@ class EventController extends Controller
             }else{
                 //查询总积分
                 $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-                $msg='你的总积分为：'.$integral_time['integral'];
+                $msg='你的总积分为：'.$integral_time['integral'].'分';
                 echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
             }
 
