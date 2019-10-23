@@ -65,3 +65,5 @@ Route::get('week_test/login_news','LoginController@login_news');
 //二维码
 Route::get('wechat/qrlist','WechatController@qr_lists');
 Route::get('wechat/add_qr','WechatController@add_qr');
+//jssdk
+Route::get('wechat/jssdk','WechatController@jssdk');

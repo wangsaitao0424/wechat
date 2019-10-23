@@ -53,7 +53,7 @@ class EventController extends Controller
             }
             $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
 //            dd($nickname);
-            $msg="你好".$nickname['nickname'].",欢迎来到！";
+            $msg="欢迎".$nickname['nickname']."同学进入选课系统";
             $sign=Sign::where(['openid'=>$nickname['openid']])->first();
 //            dd($sign);
             if(empty($sign)){

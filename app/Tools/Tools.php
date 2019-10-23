@@ -29,6 +29,30 @@ Class Tools{
     }
 
     /**
+     * 获取jsapi_ticket
+     * @return mixed
+     */
+    public function jsapi_ticket()
+    {
+        $key='wechat_jsapi_ticket';
+//       $cache = Cache::forget($key);
+//       dd($cache);
+//        判断是否为空
+        if(Cache::has($key)){
+//    	    有，取出来
+            $wechat_jsapi_ticket=Cache::get($key);
+        }else{
+//    	    没有，从微信获取
+            $file=file_get_contents('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$this->access_token().'&type=jsapi');
+            $re=json_decode($file,1);
+//            存
+            Cache::put($key,$re['ticket'],$re['expires_in']);
+            $wechat_jsapi_ticket=$re['ticket'];
+        }
+        return $wechat_jsapi_ticket;
+    }
+
+    /**
      * 根据openid获取用户的基本新
      * @param $openid
      * @return mixed

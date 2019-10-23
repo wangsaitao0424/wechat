@@ -194,4 +194,21 @@ class WechatController extends Controller
         $result=json_decode($re,1);
         dd($result);
     }
+
+    /**
+     * jssdk
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function jssdk()
+    {
+        $url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $_now_=time();
+        $appid=env('APPID');
+        $nonce_Str=rand(1000,9999).time().'jssdk';
+        $jsapi_ticket=$this->tools->jsapi_ticket();
+        //ASCII 码从小到大排序
+        $ascll='jsapi_ticket='.$jsapi_ticket.'&noncestr='.$nonce_Str.'&timestamp='.$_now_.'&url='.$url.'';
+        $signature=sha1($ascll);
+        return view('Wechat.jssdk',['appId'=>$appid,'timestamp'=>$_now_,'nonceStr'=>$nonce_Str,'signature'=>$signature]);
+    }
 }
