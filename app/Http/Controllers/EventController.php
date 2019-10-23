@@ -30,27 +30,26 @@ class EventController extends Controller
 //        关注操作
         if($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe'){
             //判断openid表是否有当前openid
-            $openid=Openid::where(['openid'=>$xml_arr['FromUserName']])->first();
-            if(isset($openid)){
+            $openid_info = Openid::where(['openid'=>$xml_arr['FromUserName']])->first();
+            if(empty($openid_info)){
                 //首次关注
                 if(isset($xml_arr['Ticket'])){
                     //带参数
                     $share_code = explode('_',$xml_arr['EventKey'])[1];
-//                    dd($share_code);
                     Openid::insert([
                         'uid'=>$share_code,
                         'openid'=>$xml_arr['FromUserName'],
                         'subscribe'=>1
                     ]);
-                    DB::connection('mysql_wx')->table('user')->where(['id'=>$share_code])->increment('share_num',1); //加业绩
+                    DB::connection('mysql_wx')->table('user')->where(['uid'=>$share_code])->increment('qr_count',1); //加业绩
+                }else{
+                    //普通关注
+                    Openid::insert([
+                        'uid'=>0,
+                        'openid'=>$xml_arr['FromUserName'],
+                        'subscribe'=>1
+                    ]);
                 }
-             }else{
-                //普通关注
-                Openid::insert([
-                    'uid'=>0,
-                    'openid'=>$xml_arr['FromUserName'],
-                    'subscribe'=>1
-                ]);
             }
             $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
 //            dd($nickname);
@@ -86,7 +85,7 @@ class EventController extends Controller
                         'subscribe_time'=>$nickname['subscribe_time']
                     ]);
                 }
-//                $ti=date('Y-m-d',strtotime("-1 days"));
+//                $ti=strtotime("-2 days");
 //                dd($ti);
                 //今天时间
                 $today_time=date('Y-m-d',time());
