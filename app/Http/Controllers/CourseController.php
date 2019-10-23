@@ -10,4 +10,8 @@ class CourseController extends Controller
     {
         return view('Course.courseAdd');
     }
+    public function course_do(Request $request)
+    {
+        $req=$request->all();
+    }
 }

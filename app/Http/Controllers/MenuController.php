@@ -99,7 +99,7 @@ class MenuController extends Controller
                   $data['button'][]=[
                       "type"=>"view",
                       "name"=>$v['name'],
-                      "key"=>$v['event_key']
+                      "url"=>$v['event_key']
                   ];
               }
           }elseif($v['type'] == 3){
