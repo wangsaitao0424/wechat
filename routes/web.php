@@ -52,7 +52,7 @@ Route::get('wechat/wechat_carte','WechatController@wechat_carte');
 Route::get('wechat/add_menu','MenuController@add_menu');
 Route::post('wechat/create_menu','MenuController@create_menu');
 //加载菜单
-Route::get('wecaht/wechat_menu','MenuController@wechat_menu');
+Route::get('wechat/wechat_menu','MenuController@wechat_menu');
 //自定义菜单列表
 Route::get('wechat/menu_list','MenuController@menu_list');
 //删除数据库中的自定义菜单
@@ -67,3 +67,5 @@ Route::get('wechat/qrlist','WechatController@qr_lists');
 Route::get('wechat/add_qr','WechatController@add_qr');
 //jssdk
 Route::get('wechat/jssdk','WechatController@jssdk');
+//课程管理
+Route::get('wechat/course','CourseController@course_add');
