@@ -16,6 +16,11 @@ class CourseController extends Controller
     }
     public function course_add()
     {
+        $uid=Request()->session()->get('uid');
+        $cousr=Course::where(['uid'=>$uid])->first();
+        if(isset($cousr)){
+            echo 111;die;
+        }
         return view('Course.courseAdd');
     }
     public function course_do(Request $request)
@@ -30,6 +35,6 @@ class CourseController extends Controller
             'lesson_three'=>$req['lesson_three'],
             'lesson_four'=>$req['lesson_four'],
         ]);
-        return redirect('../../../../../../');
+        return dd('提交成功');
     }
 }
