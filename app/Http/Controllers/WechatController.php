@@ -82,7 +82,7 @@ class WechatController extends Controller
         $users=json_decode($user,1);
 //        查询库
         $user_info=DB::connection('mysql_wx')->table('user_wecaht')->where(['openid'=>$users['openid']])->first();
-        dd($user_info->uid);
+//        dd($user_info->uid);
         if(!empty($user_info)){
 //            存在存session
             $request->session()->put('uid',$user_info->uid);
