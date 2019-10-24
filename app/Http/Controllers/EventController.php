@@ -132,6 +132,7 @@ class EventController extends Controller
                     $msg = '你的总积分为：' . $integral_time['integral'] . '分';
                     echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
             }elseif($xml_arr['EventKey'] == '6732'){
+                //课程查询
                 $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                 $uid= DB::connection('mysql_wx')->table('user')->where(['name'=>$nickname['nickname']])->first();
                 $course=Course::where(['id'=>$uid->uid])->first();
@@ -176,7 +177,7 @@ class EventController extends Controller
                     }elseif($course['lesson_four'] == 4){
                         $lesson_four="数学";
                     }
-                    $msg = "你好,".$nickname['nickname']."同学,你当前的课程安排如下\n第一节:".$lesson_one."\n第二节课".$lesson_two."\n第三节课".$lesson_three."\n第四节课".$lesson_four;
+                    $msg = "你好,".$nickname['nickname']."同学,你当前的课程安排如下\n第一节:".$lesson_one."\n第二节课:".$lesson_two."\n第三节课:".$lesson_three."\n第四节课:".$lesson_four;
                     echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
                 }else{
                     $msg = "请先选择课程";
@@ -185,7 +186,7 @@ class EventController extends Controller
             }
 
         }
-        //课程查询
+
 //        普通消息
         if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="你好"){
             $msg="你好！";

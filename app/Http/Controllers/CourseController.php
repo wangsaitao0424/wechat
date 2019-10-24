@@ -31,12 +31,20 @@ class CourseController extends Controller
     public function course_add()
     {
         $uid=Request()->session()->get('uid');
+//        echo strtotime("-1 days");die;
+//        echo date('Y-m-d',);die;
+        $times=1572594693;
+        $today_time=time();
         $cousr=Course::where(['uid'=>$uid])->first();
         if(isset($cousr)){
-            if($cousr['count'] >= 3){
-                dd("操作次数超限");
+            if($today_time < $times){
+                if($cousr['count'] >= 3){
+                    dd("操作次数超限");
+                }else{
+                    return redirect('wechat/course_update');
+                }
             }else{
-                return redirect('wechat/course_update');
+                dd("日期已过");
             }
         }else{
             return view('Course.courseAdd');
