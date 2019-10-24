@@ -57,14 +57,14 @@ class WechatController extends Controller
      * 微信授权
      * 获取code
      */
-    public function login_code()
-    {
-        $redirect_uri=env('APP_URL').'/wecaht/code';
-        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-//        dd($url);
-        header('Location:'.$url);
-//        dd(11);
-    }
+//    public function login_code()
+//    {
+//        $redirect_uri=env('APP_URL').'/wecaht/code';
+//        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+////        dd($url);
+//        header('Location:'.$url);
+////        dd(11);
+//    }
     /**
      * 登录
      */
@@ -106,7 +106,7 @@ class WechatController extends Controller
                 dd('有误');
             }
         }
-        return redirect('');
+        return redirect('wechat/course_add');
     }
     /**
      * 获取access_token
