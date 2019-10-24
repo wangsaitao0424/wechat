@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Tools\Tools;
 use App\Model\Sign;
 use App\Model\Openid;
+use App\Model\Course;
 use DB;
 class EventController extends Controller
 {
@@ -125,15 +126,66 @@ class EventController extends Controller
                     $msg='签到成功';
                     echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
                 }
-            }else{
-                //查询总积分
-                $integral_time=Sign::where(['openid'=>$xml_arr['FromUserName']])->first();
-                $msg='你的总积分为：'.$integral_time['integral'].'分';
-                echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
+            }elseif($xml_arr['EventKey'] == 'bbbb'){
+                    //查询总积分
+                    $integral_time = Sign::where(['openid' => $xml_arr['FromUserName']])->first();
+                    $msg = '你的总积分为：' . $integral_time['integral'] . '分';
+                    echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
+            }elseif($xml_arr['EventKey'] == '6732'){
+                $uid=$this->request->session()->get('uid');
+                $course=Course::where(['id'=>$uid])->first();
+                if(isset($course)){
+                    $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
+                    $lesson_one="";
+                    if($nickname['lesson_one'] == 1){
+                        $lesson_one="php";
+                    }elseif($nickname['lesson_one'] == 2){
+                        $lesson_one="语文";
+                    }elseif($nickname['lesson_one'] == 3){
+                        $lesson_one="英语";
+                    }elseif($nickname['lesson_one'] == 4){
+                        $lesson_one="数学";
+                    }
+                    $lesson_two="";
+                    if($nickname['lesson_two'] == 1){
+                        $lesson_two="php";
+                    }elseif($nickname['lesson_two'] == 2){
+                        $lesson_two="语文";
+                    }elseif($nickname['lesson_two'] == 3){
+                        $lesson_two="英语";
+                    }elseif($nickname['lesson_two'] == 4){
+                        $lesson_two="数学";
+                    }
+                    $lesson_three="";
+                    if($nickname['lesson_three'] == 1){
+                        $lesson_three="php";
+                    }elseif($nickname['lesson_three'] == 2){
+                        $lesson_three="语文";
+                    }elseif($nickname['lesson_three'] == 3){
+                        $lesson_three="英语";
+                    }elseif($nickname['lesson_three'] == 4){
+                        $lesson_three="数学";
+                    }
+                    $lesson_four="";
+                    if($nickname['lesson_four'] == 1){
+                        $lesson_four="php";
+                    }elseif($nickname['lesson_four'] == 2){
+                        $lesson_four="语文";
+                    }elseif($nickname['lesson_four'] == 3){
+                        $lesson_four="英语";
+                    }elseif($nickname['lesson_four'] == 4){
+                        $lesson_four="数学";
+                    }
+                    $msg = '你好,'.$nickname['nickname'].'同学,你当前的课程安排如下'.\n.'第一节:'.$lesson_one.\n.'第二节课'.$lesson_two.\n.'第三节课'.$lesson_three.\n.'第四节课'.$lesson_four;
+                    echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
+                }else{
+                    $msg = "请先选择课程";
+                    echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
+                }
             }
 
         }
-        //课程管理
+        //课程查询
 //        普通消息
         if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="你好"){
             $msg="你好！";

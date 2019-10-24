@@ -6,24 +6,38 @@ use Illuminate\Http\Request;
 use App\Model\Course;
 class CourseController extends Controller
 {
+    /**
+     * 登陆
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function course()
     {
         $uid=Request()->session()->get('uid');
+        //判断是否登陆过
         if(!empty($uid)){
             return redirect('wechat/course_add');
         }
+        //网页授权
         $redirect_uri=env('APP_URL').'/wecaht/code';
 //        dd($redirect_uri);
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 //        dd($url);
         header('Location:'.$url);
     }
+    /**
+     * 课程管理
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function course_add()
     {
         $uid=Request()->session()->get('uid');
         $cousr=Course::where(['uid'=>$uid])->first();
         if(isset($cousr)){
-            return redirect('wechat/course_update');
+            if($cousr['count'] >= 3){
+                dd("操作次数超限");
+            }else{
+                return redirect('wechat/course_update');
+            }
         }else{
             return view('Course.courseAdd');
         }
