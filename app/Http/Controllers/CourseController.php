@@ -8,6 +8,10 @@ class CourseController extends Controller
 {
     public function course()
     {
+        $uid=Request()->session()->get('uid');
+        if(empty($uid)){
+            dd($uid);
+        }
         $redirect_uri=env('APP_URL').'/wecaht/code';
 //        dd($redirect_uri);
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
