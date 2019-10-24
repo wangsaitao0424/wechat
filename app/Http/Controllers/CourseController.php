@@ -30,6 +30,6 @@ class CourseController extends Controller
             'lesson_three'=>$req['lesson_three'],
             'lesson_four'=>$req['lesson_four'],
         ]);
-        dd($course);
+        return redirect('../../../../../../');
     }
 }
