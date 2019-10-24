@@ -10,7 +10,7 @@ class CourseController extends Controller
     {
         $uid=Request()->session()->get('uid');
         if(!empty($uid)){
-            dd($uid);
+            return redirect('wechat/course_add');
         }
         $redirect_uri=env('APP_URL').'/wecaht/code';
 //        dd($redirect_uri);
@@ -45,7 +45,7 @@ class CourseController extends Controller
     public function course_update()
     {
         $uid=Request()->session()->get('uid');
-        $cousr=Course::where(['uid'=>$uid])->first();
+        $cousr=Course::where(['uid'=>2])->first();
         return view('Course.courseUpdate',['course'=>$cousr]);
     }
     public function course_update_do()
