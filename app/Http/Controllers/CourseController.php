@@ -56,7 +56,8 @@ class CourseController extends Controller
             'lesson_two'=>$req['lesson_two'],
             'lesson_three'=>$req['lesson_three'],
             'lesson_four'=>$req['lesson_four'],
-        ])->increment('count',1);
+        ]);
+        Course::where('id',$req['id'])->increment('count',1);
         dd('修改成功');
     }
 }
