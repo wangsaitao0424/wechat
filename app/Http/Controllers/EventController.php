@@ -132,7 +132,7 @@ class EventController extends Controller
                     $msg = '你的总积分为：' . $integral_time['integral'] . '分';
                     echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
             }elseif($xml_arr['EventKey'] == '6732'){
-                $uid=$this->request->session()->get('uid');
+                $uid=Request()->session()->get('uid');
                 dd($uid);
                 $course=Course::where(['id'=>$uid])->first();
                 if(isset($course)){
