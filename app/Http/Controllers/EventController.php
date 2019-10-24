@@ -137,43 +137,43 @@ class EventController extends Controller
                 $course=Course::where(['id'=>$uid->uid])->first();
                 if(isset($course)){
                     $lesson_one="";
-                    if($nickname['lesson_one'] == 1){
+                    if($course['lesson_one'] == 1){
                         $lesson_one="php";
-                    }elseif($nickname['lesson_one'] == 2){
+                    }elseif($course['lesson_one'] == 2){
                         $lesson_one="语文";
-                    }elseif($nickname['lesson_one'] == 3){
+                    }elseif($course['lesson_one'] == 3){
                         $lesson_one="英语";
-                    }elseif($nickname['lesson_one'] == 4){
+                    }elseif($course['lesson_one'] == 4){
                         $lesson_one="数学";
                     }
                     $lesson_two="";
-                    if($nickname['lesson_two'] == 1){
+                    if($course['lesson_two'] == 1){
                         $lesson_two="php";
-                    }elseif($nickname['lesson_two'] == 2){
+                    }elseif($course['lesson_two'] == 2){
                         $lesson_two="语文";
-                    }elseif($nickname['lesson_two'] == 3){
+                    }elseif($course['lesson_two'] == 3){
                         $lesson_two="英语";
-                    }elseif($nickname['lesson_two'] == 4){
+                    }elseif($course['lesson_two'] == 4){
                         $lesson_two="数学";
                     }
                     $lesson_three="";
-                    if($nickname['lesson_three'] == 1){
+                    if($course['lesson_three'] == 1){
                         $lesson_three="php";
-                    }elseif($nickname['lesson_three'] == 2){
+                    }elseif($course['lesson_three'] == 2){
                         $lesson_three="语文";
-                    }elseif($nickname['lesson_three'] == 3){
+                    }elseif($course['lesson_three'] == 3){
                         $lesson_three="英语";
-                    }elseif($nickname['lesson_three'] == 4){
+                    }elseif($course['lesson_three'] == 4){
                         $lesson_three="数学";
                     }
                     $lesson_four="";
-                    if($nickname['lesson_four'] == 1){
+                    if($course['lesson_four'] == 1){
                         $lesson_four="php";
-                    }elseif($nickname['lesson_four'] == 2){
+                    }elseif($course['lesson_four'] == 2){
                         $lesson_four="语文";
-                    }elseif($nickname['lesson_four'] == 3){
+                    }elseif($course['lesson_four'] == 3){
                         $lesson_four="英语";
-                    }elseif($nickname['lesson_four'] == 4){
+                    }elseif($course['lesson_four'] == 4){
                         $lesson_four="数学";
                     }
                     $msg = '你好,'.$nickname['nickname'].'同学,你当前的课程安排如下'.\n.'第一节:'.$lesson_one.\n.'第二节课'.$lesson_two.\n.'第三节课'.$lesson_three.\n.'第四节课'.$lesson_four;
