@@ -13,7 +13,6 @@ class CourseController extends Controller
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 //        dd($url);
         header('Location:'.$url);
-        dd(11);
     }
     public function course_add()
     {
@@ -21,6 +20,8 @@ class CourseController extends Controller
     }
     public function course_do(Request $request)
     {
+        $uid=$request->session()->get('uid');
+        dd($uid);
         $req=$request->all();
     }
 }
