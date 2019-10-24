@@ -134,6 +134,7 @@ class EventController extends Controller
             }elseif($xml_arr['EventKey'] == '6732'){
                 $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                 $uid= DB::connection('mysql_wx')->table('user')->where(['name'=>$nickname['nickname']])->first();
+                dd($uid);
                 $course=Course::where(['id'=>$uid['uid']])->first();
                 if(isset($course)){
                     $lesson_one="";
