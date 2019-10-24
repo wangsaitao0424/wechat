@@ -71,3 +71,5 @@ Route::get('wechat/jssdk','WechatController@jssdk');
 Route::get('wechat/course','CourseController@course');
 Route::get('wechat/course_add','CourseController@course_add');
 Route::post('wechat/course_do','CourseController@course_do');
+Route::get('wechat/course_update','CourseController@course_update');
+Route::post('wechat/course_update_do','CourseController@course_update_do');

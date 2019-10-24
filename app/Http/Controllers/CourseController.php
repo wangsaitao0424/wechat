@@ -19,9 +19,10 @@ class CourseController extends Controller
         $uid=Request()->session()->get('uid');
         $cousr=Course::where(['uid'=>$uid])->first();
         if(isset($cousr)){
-            echo 111;die;
+            return redirect('wechat/course_update');
+        }else{
+            return view('Course.courseAdd');
         }
-        return view('Course.courseAdd');
     }
     public function course_do(Request $request)
     {
@@ -36,5 +37,22 @@ class CourseController extends Controller
             'lesson_four'=>$req['lesson_four'],
         ]);
         return dd('提交成功');
+    }
+    public function course_update()
+    {
+        $uid=Request()->session()->get('uid');
+        $cousr=Course::where(['uid'=>$uid])->first();
+        return view('Course.courseUpdate',['course'=>$cousr]);
+    }
+    public function course_update_do()
+    {
+        $req=request()->all();
+        Course::where(['id'=>$req['id']])->update([
+            'lesson_one'=>$req['lesson_one'],
+            'lesson_two'=>$req['lesson_two'],
+            'lesson_three'=>$req['lesson_three'],
+            'lesson_four'=>$req['lesson_four'],
+        ])->increment('count',1);
+        dd('修改成功');
     }
 }
