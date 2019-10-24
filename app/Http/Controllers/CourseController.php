@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model\Course;
 class CourseController extends Controller
 {
     public function course()
@@ -21,7 +21,15 @@ class CourseController extends Controller
     public function course_do(Request $request)
     {
         $uid=$request->session()->get('uid');
-        dd($uid);
+//        dd($uid);
         $req=$request->all();
+        $course=Course::create([
+            'uid'=>$uid,
+            'lesson_one'=>$req['lesson_one'],
+            'lesson_two'=>$req['lesson_two'],
+            'lesson_three'=>$req['lesson_three'],
+            'lesson_four'=>$req['lesson_four'],
+        ]);
+        dd($course);
     }
 }
