@@ -42,6 +42,7 @@ class CourseController extends Controller
     {
         $uid=Request()->session()->get('uid');
         $cousr=Course::where(['uid'=>$uid])->first();
+        dd($cousr);
         return view('Course.courseUpdate',['course'=>$cousr]);
     }
     public function course_update_do()
