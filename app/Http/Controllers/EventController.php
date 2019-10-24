@@ -176,7 +176,7 @@ class EventController extends Controller
                     }elseif($course['lesson_four'] == 4){
                         $lesson_four="数学";
                     }
-                    $msg = '你好,'.$nickname['nickname'].'同学,你当前的课程安排如下'.\n.'第一节:'.$lesson_one.\n.'第二节课'.$lesson_two.\n.'第三节课'.$lesson_three.\n.'第四节课'.$lesson_four;
+                    $msg = "你好,".$nickname['nickname']."同学,你当前的课程安排如下\n第一节:".$lesson_one."\n第二节课".$lesson_two."\n第三节课".$lesson_three."\n第四节课".$lesson_four;
                     echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
                 }else{
                     $msg = "请先选择课程";
