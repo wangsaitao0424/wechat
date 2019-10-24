@@ -51,16 +51,16 @@ class EventController extends Controller
             $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
 //            dd($nickname);
             $msg="欢迎".$nickname['nickname']."同学进入选课系统";
-            $sign=Sign::where(['openid'=>$nickname['openid']])->first();
-//            dd($sign);
-            if(empty($sign)){
-                Sign::create([
-                    'openid'=>$nickname['openid'],
-                    'nickname'=>$nickname['nickname'],
-                    'sex'=>$nickname['sex'],
-                    'subscribe_time'=>$nickname['subscribe_time']
-                ]);
-            }
+//            $sign=Sign::where(['openid'=>$nickname['openid']])->first();
+////            dd($sign);
+//            if(empty($sign)){
+//                Sign::create([
+//                    'openid'=>$nickname['openid'],
+//                    'nickname'=>$nickname['nickname'],
+//                    'sex'=>$nickname['sex'],
+//                    'subscribe_time'=>$nickname['subscribe_time']
+//                ]);
+//            }
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
         }
 //        //签到
