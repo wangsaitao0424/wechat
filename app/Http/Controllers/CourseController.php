@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
+    public function course()
+    {
+        $redirect_uri=env('APP_URL').'/wecaht/code';
+        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+//        dd($url);
+        header('Location:'.$url);
+    }
     public function course_add()
     {
         return view('Course.courseAdd');

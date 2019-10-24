@@ -137,14 +137,11 @@ class EventController extends Controller
 
         }
         //课程管理
-        if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'VIEW'){
-            if($xml_arr['EventKey']=='http://47.93.253.39/wechat/course/'){
-                $redirect_uri=env('APP_URL').'/wecaht/code';
-                $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.urlencode($redirect_uri) .'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-//        dd($url);
-                header('Location:'.$url);
-            }
-        }
+//        if($xml_arr['MsgType']=='event' && $xml_arr['Event'] == 'VIEW'){
+//            if($xml_arr['EventKey']=='http://47.93.253.39/wechat/course/'){
+//
+//            }
+//        }
 //        普通消息
         if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="你好"){
             $msg="你好！";

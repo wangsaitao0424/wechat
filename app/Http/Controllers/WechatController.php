@@ -106,7 +106,7 @@ class WechatController extends Controller
                 dd('有误');
             }
         }
-        return redirect('/');
+        return redirect('');
     }
     /**
      * 获取access_token
