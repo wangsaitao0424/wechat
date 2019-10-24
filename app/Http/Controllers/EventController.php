@@ -134,6 +134,7 @@ class EventController extends Controller
             }elseif($xml_arr['EventKey'] == '6732'){
                 $uid=$this->request->session()->get('uid');
                 $course=Course::where(['id'=>$uid])->first();
+                dd($course);
                 if(isset($course)){
                     $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
                     $lesson_one="";
