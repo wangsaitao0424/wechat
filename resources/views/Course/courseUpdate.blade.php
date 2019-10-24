@@ -17,7 +17,7 @@
                     <td>第一节课</td>
                     <td>
                         <select name="lesson_one" id="">
-                            <option value="{{$course->lesson_one}}">@if($course->lesson_one == 1)p@elseif($course->lesson_one == 2)语文@elseif($course->lesson_one == 3)英语@elseif($course->lesson_one == 4)数学@endif</option>
+                            <option value="{{$course->lesson_one}}">@if($course->lesson_one == 1)php@elseif($course->lesson_one == 2)语文@elseif($course->lesson_one == 3)英语@elseif($course->lesson_one == 4)数学@endif</option>
                             <option value="1">php</option>
                             <option value="2">语文</option>
                             <option value="3">英语</option>
@@ -29,7 +29,7 @@
                     <td>第二节课</td>
                     <td>
                         <select name="lesson_two" id="">
-                            <option value="{{$course->lesson_two}}">@if($course->lesson_two == 1)p@elseif($course->lesson_two == 2)语文@elseif($course->lesson_two == 3)英语@elseif($course->lesson_two == 4)数学@endif</option>
+                            <option value="{{$course->lesson_two}}">@if($course->lesson_two == 1)php@elseif($course->lesson_two == 2)语文@elseif($course->lesson_two == 3)英语@elseif($course->lesson_two == 4)数学@endif</option>
                             <option value="1">php</option>
                             <option value="2">语文</option>
                             <option value="3">英语</option>
@@ -41,7 +41,7 @@
                     <td>第三节课</td>
                     <td>
                         <select name="lesson_three" id="">
-                            <option value="{{$course->lesson_three}}">@if($course->lesson_three == 1)p@elseif($course->lesson_three == 2)语文@elseif($course->lesson_three == 3)英语@elseif($course->lesson_three == 4)数学@endif</option>
+                            <option value="{{$course->lesson_three}}">@if($course->lesson_three == 1)php@elseif($course->lesson_three == 2)语文@elseif($course->lesson_three == 3)英语@elseif($course->lesson_three == 4)数学@endif</option>
                             <option value="1">php</option>
                             <option value="2">语文</option>
                             <option value="3">英语</option>
@@ -53,7 +53,7 @@
                     <td>第四节课</td>
                     <td>
                         <select name="lesson_four" id="">
-                            <option value="{{$course->lesson_four}}">@if($course->lesson_four == 1)p@elseif($course->lesson_four == 2)语文@elseif($course->lesson_four == 3)英语@elseif($course->lesson_four == 4)数学@endif</option>
+                            <option value="{{$course->lesson_four}}">@if($course->lesson_four == 1)php@elseif($course->lesson_four == 2)语文@elseif($course->lesson_four == 3)英语@elseif($course->lesson_four == 4)数学@endif</option>
                             <option value="1">php</option>
                             <option value="2">语文</option>
                             <option value="3">英语</option>
