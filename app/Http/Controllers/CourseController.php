@@ -13,6 +13,7 @@ class CourseController extends Controller
     public function course()
     {
         $uid=Request()->session()->get('uid');
+        dd($uid);
         //判断是否登陆过
         if(!empty($uid)){
             return redirect('wechat/course_add');
