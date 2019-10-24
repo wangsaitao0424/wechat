@@ -133,8 +133,8 @@ class EventController extends Controller
                     echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
             }elseif($xml_arr['EventKey'] == '6732'){
                 $nickname=$this->tools->get_wechat_user($xml_arr['FromUserName']);
-                dd($nickname);
-                $course=Course::where(['id'=>$nickname['uid']])->first();
+                $uid= DB::connection('mysql_wx')->table('user')->where(['name'=>$nickname['nickname']])->first();
+                $course=Course::where(['id'=>$uid['uid']])->first();
                 if(isset($course)){
                     $lesson_one="";
                     if($nickname['lesson_one'] == 1){
