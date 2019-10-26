@@ -202,24 +202,24 @@ class EventController extends Controller
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[voice]]></MsgType><Voice><MediaId><![CDATA[".$msg."]]></MediaId></Voice></xml>";
         }
         //油价
-        if($xml_arr['MsgType']=='text'){
-            $url = "http://apis.juhe.cn/cnoil/oil_city";
-            $params = array(
-                "key" => env('APPKEY'),//应用APPKEY(应用详细页查询)
-                "dtype" => $xml_arr['Content'],//返回数据的格式,xml或json，默认json
-            );
-            $paramstring = http_build_query($params);
-            $content = $this->tools->juhecurl($url,$paramstring);
-            $result = json_decode($content,true);
-            if($result){
-                if($result['error_code']=='0'){
-                    print_r($result);
-                }else{
-                    echo $result['error_code'].":".$result['reason'];
-                }
-            }else{
-                echo "请求失败";
-            }
-        }
+//        if($xml_arr['MsgType']=='text'){
+//            $url = "http://apis.juhe.cn/cnoil/oil_city";
+//            $params = array(
+//                "key" => env('APPKEY'),//应用APPKEY(应用详细页查询)
+//                "dtype" => $xml_arr['Content'],//返回数据的格式,xml或json，默认json
+//            );
+//            $paramstring = http_build_query($params);
+//            $content = $this->tools->juhecurl($url,$paramstring);
+//            $result = json_decode($content,true);
+//            if($result){
+//                if($result['error_code']=='0'){
+//                    print_r($result);
+//                }else{
+//                    echo $result['error_code'].":".$result['reason'];
+//                }
+//            }else{
+//                echo "请求失败";
+//            }
+//        }
     }
 }
