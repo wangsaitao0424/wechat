@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
             $user_url = 'https://api.weixin.qq.com/cgi-bin/user/get?access_token='.$tools->access_token().'&next_openid=';
             $openid_info = file_get_contents($user_url);
             $user_result = json_decode($openid_info,1);
+            die();
             foreach($user_result['data']['openid'] as $v){
                 $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$tools->access_token().'&openid='.$v.'&lang=zh_CN';
                 $user_re = file_get_contents($url);

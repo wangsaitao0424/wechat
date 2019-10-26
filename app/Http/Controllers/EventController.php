@@ -193,13 +193,33 @@ class EventController extends Controller
           echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[".$msg."]]></Content></xml>";
         }
         //被动回复发送图片
-        if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="图片"){
-            $msg="u1d_3ecTK6ivZFZghEqyC8ygkKNV8-rQJPJpWOHomPGenhqHpXLq5iqoWLpp-eNm";
-            echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[".$msg."]]></MediaId></Image></xml>";
-        }
+//        if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="图片"){
+//            $msg="u1d_3ecTK6ivZFZghEqyC8ygkKNV8-rQJPJpWOHomPGenhqHpXLq5iqoWLpp-eNm";
+//            echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[".$msg."]]></MediaId></Image></xml>";
+//        }
         if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="语音"){
             $msg="GJttHFschemCg2l6QHj78GZnmYnO5EBpq73NvHpjxZ5Er_ocsVcH80ZXS2VWp3Eh";
             echo "<xml><ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName><FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName><CreateTime>".time()."</CreateTime><MsgType><![CDATA[voice]]></MsgType><Voice><MediaId><![CDATA[".$msg."]]></MediaId></Voice></xml>";
+        }
+        //油价
+        if($xml_arr['MsgType']=='text'){
+            $url = "http://apis.juhe.cn/cnoil/oil_city";
+            $params = array(
+                "key" => env('APPKEY'),//应用APPKEY(应用详细页查询)
+                "dtype" => $xml_arr['Content'],//返回数据的格式,xml或json，默认json
+            );
+            $paramstring = http_build_query($params);
+            $content = $this->tools->juhecurl($url,$paramstring);
+            $result = json_decode($content,true);
+            if($result){
+                if($result['error_code']=='0'){
+                    print_r($result);
+                }else{
+                    echo $result['error_code'].":".$result['reason'];
+                }
+            }else{
+                echo "请求失败";
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ class MenuController extends Controller
         }
 //        dd("提交成功");
         dd('请手动执行http://www.lening_wechat.com/wechat/wechat_menu');
-        return redirect('wecaht/wechat_menu');
+//        return redirect('wecaht/wechat_menu');
     }
 
     /**
@@ -148,6 +148,10 @@ class MenuController extends Controller
 //        dd($list);
         return view('Menu.menu_list',['list'=>$list]);
     }
+
+    /**
+     * 删除自定义菜单
+     */
     public function menu_del()
     {
         $id=$this->request->all();
