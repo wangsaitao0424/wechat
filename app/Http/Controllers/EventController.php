@@ -192,6 +192,27 @@ class EventController extends Controller
             }
 
         }
+        //天气
+        $contents=strstr($xml_arr['Content'],'天气');
+        if(!empty($contents)){
+           $city=file_get_contents('http://api.k780.com/?app=weather.city&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
+           $ci=json_decode($city,1);
+           $names=mb_substr($xml_arr['Content'],0,-2);
+//           dd($ci['result']['datas']['1']['citynm']);
+            $msgs=[];
+           foreach ($ci['result']['datas'] as $k=>$v){
+               if($v['citynm'] == $names){
+                  $url=file_get_contents('http://api.k780.com/?app=weather.future&weaid='.$v['weaid'].'&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
+                  $urls=json_decode($url,1);
+                   foreach ($urls['result'] as $k=>$v){
+                       $msg=$v['days'].",".$v['citynm'].",".$v['week'].",".$v['temperature'].",".$v['weather']."\n";
+                       $msgs[]=$msg;
+                   }
+                   echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msgs['0'].$msgs['1'].$msgs['2'].$msgs['3'].$msgs['4'].$msgs['5'].$msgs['6']. "]]></Content></xml>";die;
+               }
+           }
+
+        }
 //        图文消息
         if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "图文") {
             $title="标题";
@@ -201,10 +222,10 @@ class EventController extends Controller
             echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>1</ArticleCount><Articles><item><Title><![CDATA[".$title."]]></Title><Description><![CDATA[".$description."]]></Description><PicUrl><![CDATA[".$picurl."]]></PicUrl><Url><![CDATA[".$url."]]></Url></item></Articles></xml>";
         }
 //        普通消息
-        if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "你好") {
-            $msg = "你好！";
-            echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
-        }
+//        if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "你好") {
+//            $msg = "你好！";
+//            echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msg . "]]></Content></xml>";
+//        }
         //被动回复发送图片
 //        if($xml_arr['MsgType']=='text' && $xml_arr['Content']=="图片"){
 //            $msg="u1d_3ecTK6ivZFZghEqyC8ygkKNV8-rQJPJpWOHomPGenhqHpXLq5iqoWLpp-eNm";
