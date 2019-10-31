@@ -192,7 +192,14 @@ class EventController extends Controller
             }
 
         }
-
+//        图文消息
+        if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "图文") {
+            $title="标题";
+            $description="描述";
+            $picurl="http://mmbiz.qpic.cn/mmbiz_jpg/BQaPpLPjHiadJ3hBIic3xLE2GbsEcC3u6ZXfadVhUV0I8ts97LpqbIWwVYnxbS7egYib7Uq5ABRCWwa339RlFTMiaA/0?wx_fmt=jpeg";
+            $url="https://www.chsi.com.cn/";
+            echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>1</ArticleCount><Articles><item><Title><![CDATA[".$title."]]></Title><Description><![CDATA[".$description."]]></Description><PicUrl><![CDATA[".$picurl."]]></PicUrl><Url><![CDATA[".$url."]]></Url></item></Articles></xml>";
+        }
 //        普通消息
         if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "你好") {
             $msg = "你好！";
