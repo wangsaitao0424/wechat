@@ -8,6 +8,7 @@ use App\Model\Sign;
 use App\Model\Openid;
 use App\Model\Course;
 use DB;
+use Illuminate\Support\Facades\Redis;
 class EventController extends Controller
 {
     public $tools;
@@ -192,35 +193,44 @@ class EventController extends Controller
             }
 
         }
-        //天气
-        $contents=strstr($xml_arr['Content'],'天气');
-        if(!empty($contents)){
-           $city=file_get_contents('http://api.k780.com/?app=weather.city&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
-           $ci=json_decode($city,1);
-           $names=mb_substr($xml_arr['Content'],0,-2);
-//           dd($ci['result']['datas']['1']['citynm']);
-            $msgs=[];
-           foreach ($ci['result']['datas'] as $k=>$v){
-               if($v['citynm'] == $names){
-                  $url=file_get_contents('http://api.k780.com/?app=weather.future&weaid='.$v['weaid'].'&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
-                  $urls=json_decode($url,1);
-                   foreach ($urls['result'] as $k=>$v){
-                       $msg=$v['days'].",".$v['citynm'].",".$v['week'].",".$v['temperature'].",".$v['weather']."\n";
-                       $msgs[]=$msg;
-                   }
-                   echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msgs['0'].$msgs['1'].$msgs['2'].$msgs['3'].$msgs['4'].$msgs['5'].$msgs['6']. "]]></Content></xml>";die;
-               }
-           }
 
-        }
 //        图文消息
-        if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "图文") {
-            $title="标题";
-            $description="描述";
-            $picurl="http://mmbiz.qpic.cn/mmbiz_jpg/BQaPpLPjHiadJ3hBIic3xLE2GbsEcC3u6ZXfadVhUV0I8ts97LpqbIWwVYnxbS7egYib7Uq5ABRCWwa339RlFTMiaA/0?wx_fmt=jpeg";
-            $url="https://www.chsi.com.cn/";
-            echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>1</ArticleCount><Articles><item><Title><![CDATA[".$title."]]></Title><Description><![CDATA[".$description."]]></Description><PicUrl><![CDATA[".$picurl."]]></PicUrl><Url><![CDATA[".$url."]]></Url></item></Articles></xml>";
+        if ($xml_arr['MsgType'] == 'text'  ) {
+            if($xml_arr['Content'] == "图文"){
+                $title="标题";
+                $description="描述";
+                $picurl="http://mmbiz.qpic.cn/mmbiz_jpg/BQaPpLPjHiadJ3hBIic3xLE2GbsEcC3u6ZXfadVhUV0I8ts97LpqbIWwVYnxbS7egYib7Uq5ABRCWwa339RlFTMiaA/0?wx_fmt=jpeg";
+                $url="https://www.chsi.com.cn/";
+                echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>1</ArticleCount><Articles><item><Title><![CDATA[".$title."]]></Title><Description><![CDATA[".$description."]]></Description><PicUrl><![CDATA[".$picurl."]]></PicUrl><Url><![CDATA[".$url."]]></Url></item></Articles></xml>";
+            }
+            //天气
+            $contents=strstr($xml_arr['Content'],'天气');
+            if(!empty($contents)){
+                $city=file_get_contents('http://api.k780.com/?app=weather.city&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
+                $ci=json_decode($city,1);
+                $names=mb_substr($xml_arr['Content'],0,-2);
+//           dd($ci['result']['datas']['1']['citynm']);
+                $msgs=[];
+//            if (Redis::has(' weather')) {
+//                dd(111);
+//            }else{
+//                dd(22);
+//            }
+                foreach ($ci['result']['datas'] as $k=>$v){
+                    if($v['citynm'] == $names){
+                        $url=file_get_contents('http://api.k780.com/?app=weather.future&weaid='.$v['weaid'].'&appkey='.env('APPKEYS').'&sign='.env('SIGN').'&format=json');
+                        $urls=json_decode($url,1);
+                        foreach ($urls['result'] as $k=>$v){
+                            $msg=$v['days'].",".$v['citynm'].",".$v['week'].",".$v['temperature'].",".$v['weather']."\n";
+                            $msgs[]=$msg;
+                        }
+                        echo "<xml><ToUserName><![CDATA[" . $xml_arr['FromUserName'] . "]]></ToUserName><FromUserName><![CDATA[" . $xml_arr['ToUserName'] . "]]></FromUserName><CreateTime>" . time() . "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[" . $msgs['0'].$msgs['1'].$msgs['2'].$msgs['3'].$msgs['4'].$msgs['5'].$msgs['6']. "]]></Content></xml>";die;
+                    }
+                }
+
+            }
         }
+
 //        普通消息
 //        if ($xml_arr['MsgType'] == 'text' && $xml_arr['Content'] == "你好") {
 //            $msg = "你好！";
